@@ -11,15 +11,16 @@
     <h3 id="webs"> NO.</h3>
 
  <script>
-        let ws = new WebSocket("ws://127.0.0.1:8000/ws/sc/");
+        let ws = new WebSocket("ws://127.0.0.1:8000/ws/sc/"); // websockets... connection open after create object of websocket
 
-        ws.onopen = function(event){
-            console.log("websockets... connection open...",event)
-            ws.send("hi, message from client")
+        ws.onopen = function(event){  // this happend when connection is in open state 
+            console.log("websockets... connection open...",event) // print into console for confirmation
+            ws.send("hi, message from client") // send data by the client to server must be need to start to way communication
+            console.log('first message from client')// print into console for confirmation
         }
-        ws.onmessage = function(event){
-            console.log("message received from server...",event,)
-         
+        ws.onmessage = function(event){ // this event occur when you got message from server 
+            console.log("message received from server...",event.data)
+            document.getElementById('webs').innerText = event.data
         }
         ws.onerror = function(event){
             console.log("websockets... errror")
