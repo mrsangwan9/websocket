@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Room creator
+    </title>           
+</head>
+<body>
+    
+    <h3>Create your room....</h3>
+            <input type="text" name="room-name" id="room" placeholder="Enter room name"><button type="btn"  id= 'btn'>Enter</button>
+
+
+<script>
+
+
+    document.getElementById('btn').onclick=function(e){
+        let group_name = document.getElementById('room').value
+        window.location.pathname = 'chat/'+group_name+'/' // update url path name with provided path name
+        //window.location.host+="/"+group_name+"/"
+    }
+   
+
+
+
+</script>
+
+
+</body>
+</html>
