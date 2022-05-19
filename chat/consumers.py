@@ -4,6 +4,7 @@ from channels.exceptions import StopConsumer # if any error occur
 from time import sleep # import sleep for stop process for one second or as sleep passing time
 import asyncio # use sleep time in asyncoConsumer we have to use asyncio.sleep(time in second )
 from asgiref.sync import async_to_sync
+from .models import chat, Group
 import json
 
 
@@ -24,6 +25,14 @@ class MySyncConsumer(SyncConsumer):
        
         print("text message received from client...", event['text'])# print message receive from
         print(type(event['text']))
+        #find group objects
+        groupname = Group.objects.get(name = self.room_name)
+       # save client message into database with given user name
+        chatt = chat(
+            message = event['text'],
+            Group_name = groupname
+        )
+        chatt.save()
         async_to_sync(self.channel_layer.group_send)(
             self.room_name,{
          

@@ -9,11 +9,12 @@
 <body>
     
     <h3 id="webs">hello welcome to {{room_name}} group.... </h3>
-    <textarea name="textarea" id="textarea" cols="30" rows="10"></textarea><br>
+    <textarea name="textarea" id="textarea" cols="30" rows="10">{% for chat in chats %}{{chat.message}}{% endfor %}</textarea><br>
     <input type="text" name="textfiled" id="text"></input>
     <button type="button" value="send" id="btn">Send</button>
     {{room_name|json_script:"room-name"}}
  <script>
+       document.getElementById('text').focus()
        console.log(typeof(document.getElementById('room-name')))
        const roomName = JSON.parse(document.getElementById('room-name').textContent);
         console.log(roomName)
@@ -21,6 +22,7 @@
             'ws://'
             + window.location.host
             +'/ws/sc/'
+
             +roomName
             +'/'
             ); // websockets... connection open after create object of websocket
@@ -42,9 +44,15 @@
         ws.onclose=  function(event){
             console.log("WebSocket close", event);
         };
+        document.getElementById('text').onkeyup = (event)=> {
+            if (event.keyCode === 13) {  // enter, return
+                document.getElementById('btn').click();
+            }
+        };
+
         document.getElementById('btn').onclick=(event)=>{
             let client_data =document.getElementById('text')
-            ws.send(client_data.value)
+            ws.send(client_data.value+'\n')
             client_data.value=''
        }
        }
